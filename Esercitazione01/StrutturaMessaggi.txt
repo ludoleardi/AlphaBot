@@ -1,0 +1,4 @@
+?;nome_file : chiedere al server se un certo nome file è presente;
+LEN;nome_file : chiedere al server il numero di frammenti di un file a partire dal suo nome file;
+LOC;nome_file:n_frammento : chiedere al server l’IP dell’host che ospita un frammento a partire nome file e dal numero del frammento;
+LOCLIST;nome_file : chiedere al server tutti gli IP degli host sui quali sono salvati i frammenti di un file a partire dal nome file.
