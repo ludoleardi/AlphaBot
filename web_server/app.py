@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 import AlphaBot
 import sqlite3 as sql
 import hashlib
@@ -30,13 +30,13 @@ def index():
 
         db = sql.connect(db_path)
         cur = db.cursor()
-        db_password = cur.execute(f'SELECT password FROM Users WHERE Username = {username}').fetchone()[0]
+        db_password = cur.execute(f'SELECT password FROM Users WHERE Username = "{username}"').fetchone()[0]
         db.close()
         
         if hashed_password == db_password:
-            return redirect("/controls")
+            return redirect(url_for("controls"))
         
-        return render_template("login.html")
+    return render_template("login.html")
 
 # Pagina controlli
 @app.route("/controls", methods=['GET', 'POST'])
