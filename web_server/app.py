@@ -5,22 +5,27 @@ import hashlib
 from time import sleep
 app = Flask(__name__)
 
+#Inizializzazione Alphabot e DB
 piero = AlphaBot.AlphaBot()
 db_path = '../Alphabot.db'
 
 db = sql.connect(db_path)
 cur = db.cursor()
-shortcuts = [s[0] for s in cur.execute("SELECT Shortcut FROM MOVEMENTS").fetchall()]
+shortcuts = [s[0] for s in cur.execute("SELECT Shortcut FROM MOVEMENTS").fetchall()] #Selezione shortcut per riferimento
 db.close()
 
+#Comandi Base
 base_commands = {'F': piero.forward, 'B': piero.backward, 'L': piero.left, 'R':piero.right}
 
+#Usato per login
 def calculate_hash(string):
     hash_object = hashlib.sha256(string.encode())
     hashed_string = hash_object.hexdigest()
     return hashed_string
 
 # Pagina Login
+#Username: Admin
+#Password: Admin
 @app.route("/", methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -59,6 +64,7 @@ def controls():
             piero.left()
             sleep(1)
             piero.stop()
+        #Comando complesso
         elif request.form.get('submit') == 'submit':
             text = request.form['speciale']
             print(text)
