@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, make_response
 import AlphaBot
 import sqlite3 as sql
 import hashlib
@@ -39,7 +39,25 @@ def index():
         db.close()
         
         if hashed_password == db_password:
-            return redirect(url_for("controls"))
+            cookie = request.cookies.get('username')
+            # Settare cookie
+            if cookie is None:
+                if username == 'admin':
+                    resp = redirect(url_for('controls.html'))
+                    resp.set_cookie('username', username)
+                    return resp
+                elif username == 'restricted':
+                    resp = redirect(url_for('restricted_controls.html'))
+                    resp.set_cookie('username', username)
+                    return resp
+            #Leggere il cookie
+            else:
+                if cookie == 'admin':
+                    resp = redirect(url_for('controls.html'))
+                    return resp
+                elif cookie == 'restricted':
+                    resp = redirect(url_for('restricted_controls.html'))
+                    return resp  
         
     return render_template("login.html")
 

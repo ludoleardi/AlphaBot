@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <link rel="stylesheet" href='../static/style_controls.css' />
+    </head>
+    <body>
+        <h3>Calcolo di integrale</h3>
+        <p>Inserisci una funzione in x.<br>Per gli integrali indefiniti lascia vuoti gli estremi di integrazione.</p>
+        <form method="post" action="/calculate">
+            <input type="text" name="func" id="func"/>
+            <label for="func">Funzione</label><br>
+            <input type="number" name="sx" id="sx"/>
+            <label for="sx">Estremo sinistro</label><br>
+            <input type="number" name="dx" id="dx"/>
+            <label for="dx">Estremo destro</label><br>
+            <input type="submit" value="submit" name="submit" id="submit-btn"/>
+        </form>
+
+        <div>
+            Risultato: {{result}}
+        </div>
+    </body>
+</html>

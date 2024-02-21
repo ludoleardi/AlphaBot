@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurazione</title>
+</head>
+
+<body>
+    <h3 align="center">Configurazione semaforo</h3>
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around;">
+        <form align="center" method="post" action="/config">
+            <input type="number" min=1 name="verde" id="verde" value={{verde}} required />
+            <label for="verde">Tempo verde</label><br><br>
+
+            <input type="number" min=1 name="giallo" id="giallo" value={{giallo}} required />
+            <label for="giallo">Tempo giallo</label><br><br>
+
+            <input type="number" min=1 name="rosso" id="rosso" value={{rosso}} required />
+            <label for="rosso">Tempo rosso</label><br><br>
+
+            <input type="number" min=1 name="spento" id="spento" value={{spento}} required />
+            <label for="spento">Tempo spento</label><br><br>
+
+            <input type="number" min=1 name="lampeggiamento" id="lampeggiamento" value={{lampeggiamento}} required />
+            <label for="lampeggiamento">Tempo lampeggiamento</label><br><br>
+
+            <input type="text" name="stato" id="stato" value={{stato}} required />
+            <label for="stato">Stato</label><br><br>
+            <input type="submit" id="configura" value="Salva configurazione">
+        </form>
+    </div>
+
+    <form action="test" align="center" style="margin-top: 1%">
+        <input type="submit" id="test" value="Esegui il test">
+    </form>
+
+
+</body>
+
+</html>
