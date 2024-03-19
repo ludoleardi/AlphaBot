@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href='../static/style_controls.css' />
+
+    <script>
+        function checkObstacle() {
+            fetch('http://192.168.1.131/api/v1/resources/sensors')
+                .then(response => response.json())
+                .then(data => {
+                    const statusElement = document.getElementById('obstacleStatus');
+
+                    if (data.l === 1 || data.r === 1) {
+                        statusElement.textContent = 'Ostacolo presente';
+                    } else if (data.l === 0 && data.r === 0) {
+                        statusElement.textContent = 'Ostacolo assente';
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        setInterval(checkObstacle, 2000);
+    </script>
+</head>
+
+<body>
+    <h3>Bottoni</h3>
+    <form method="post" action="/controls">
+        <input type="submit" value="avanti" name="avanti" />
+        <input type="submit" value="indietro" name="indietro" />
+        <input type="submit" value="sinistra" name="sinistra" />
+        <input type="submit" value="destra" name="destra" />
+        <input type="text" name="speciale" id="speciale" />
+        <input type="submit" value="submit" name="submit" id="submit-btn" />
+
+        <!-- Elemento in cui mostrare lo stato dell'ostacolo -->
+        <div id="obstacleStatus">Stato dell'ostacolo...</div>
+    </form>
+</body>
+
+</html>
