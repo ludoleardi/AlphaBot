@@ -5,21 +5,25 @@
 
     <script>
         function checkObstacle() {
-            fetch('http://192.168.1.131/api/v1/resources/sensors')
+            fetch('http://192.168.1.131:5000/api/v1/resources/sensors')
                 .then(response => response.json())
                 .then(data => {
                     const statusElement = document.getElementById('obstacleStatus');
 
-                    if (data.l === 1 || data.r === 1) {
-                        statusElement.textContent = 'Ostacolo presente';
-                    } else if (data.l === 0 && data.r === 0) {
+                    if (data.l === 0 && data.r === 0) {
+                        statusElement.textContent = 'Ostacolo presente, frontale';
+                    } else if (data.l === 1 && data.r === 0) {
+                        statusElement.textContent = 'Ostacolo presente, destra';
+                    } else if (data.l === 0 && data.r === 1) {
+                        statusElement.textContent = 'Ostacolo presente, sinistra';
+                    } else if (data.l === 1 && data.r === 1) {
                         statusElement.textContent = 'Ostacolo assente';
                     }
                 })
                 .catch(error => console.error('Error fetching data:', error));
         }
 
-        setInterval(checkObstacle, 2000);
+        setInterval(checkObstacle, 500);
     </script>
 </head>
 

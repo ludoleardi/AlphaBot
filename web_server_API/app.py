@@ -40,31 +40,35 @@ def index():
         username = request.form.get('user')
         password = request.form.get('psw')
         hashed_password = calculate_hash(password)
+        print(username, password)
 
         db = sql.connect(db_path)
         cur = db.cursor()
-        db_password = cur.execute(f'SELECT password FROM Users WHERE Username = "{username}"').fetchone()[0]
+        try:
+            db_password = cur.execute(f'SELECT password FROM Users WHERE Username = "{username}"').fetchone()[0]
+        except:
+            redirect(url_for('login.html'))
         db.close()
         
         if hashed_password == db_password:
             cookie = request.cookies.get('username')
             # Settare cookie
             if cookie is None:
-                if username == 'admin':
-                    resp = redirect(url_for('controls.html'))
+                if username == 'Admin':
+                    resp = redirect(url_for('controls'))
                     resp.set_cookie('username', username)
                     return resp
-                elif username == 'restricted':
-                    resp = redirect(url_for('restricted_controls.html'))
+                elif username == 'Restricted':
+                    resp = redirect(url_for('restricted_controls'))
                     resp.set_cookie('username', username)
                     return resp
             #Leggere il cookie
             else:
                 if cookie == 'admin':
-                    resp = redirect(url_for('controls.html'))
+                    resp = redirect(url_for('controls'))
                     return resp
                 elif cookie == 'restricted':
-                    resp = redirect(url_for('restricted_controls.html'))
+                    resp = redirect(url_for('restricted_controls'))
                     return resp  
         
     return render_template("login.html")
@@ -87,7 +91,7 @@ def controls():
             sleep(1)
             piero.stop()
         elif request.form.get('destra') == 'destra':
-            piero.left()
+            piero.right()
             sleep(1)
             piero.stop()
         #Comando complesso
